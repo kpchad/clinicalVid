@@ -12,13 +12,15 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
-    @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var sceneView: ARSCNView!
+    
+     let configuration = ARWorldTrackingConfiguration()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set the view's delegate
-        sceneView.delegate = self
+        //sceneView.autoenablesDefaultLighting = true
+        sceneView.session.run(configuration)
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints,ARSCNDebugOptions.showWorldOrigin]
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
@@ -52,6 +54,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Release any cached data, images, etc that aren't in use.
     }
 
+    @IBAction func mask(_ sender: Any) {
+        let node = SCNNode()
+        node.geometry = SCNPlane(width: 100, height: 100)
+        node.position = SCNVector3(0, 0, -100)
+        self.sceneView.scene.rootNode.addChildNode(node)
+    }
+    
+    
+    
+    
+    
+    
     // MARK: - ARSCNViewDelegate
     
 /*
